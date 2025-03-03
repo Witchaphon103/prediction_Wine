@@ -61,24 +61,26 @@ model_results["Voting Classifier"] = voting_acc
 
 # เลือกโมเดลที่ดีที่สุด
 best_model_name = max(model_results, key=model_results.get)
-best_model = models[best_model_name]
+best_model = models[best_model_name] if best_model_name in models else voting_clf
 
 # บันทึกโมเดลที่ดีที่สุด
 joblib.dump(best_model, "best_wine_quality_model.pkl")
 
 # แสดงผลลัพธ์
-print("\n✅ โมเดลที่ดีที่สุด:", best_model_name)
-print("🎯 ความแม่นยำของแต่ละโมเดล:")
+print("\nโมเดลที่ดีที่สุด:", best_model_name)
+print("ความแม่นยำของแต่ละโมเดล:")
 for model, acc in model_results.items():
     print(f"{model}: {acc:.4f}")
-print("\n📌 บันทึกโมเดลไว้ที่ 'best_wine_quality_model.pkl'")
-print("📌 บันทึก Scaler ไว้ที่ 'scaler.pkl'")
+print("\nบันทึกโมเดลไว้ที่ 'best_wine_quality_model.pkl'")
+print("บันทึก Scaler ไว้ที่ 'scaler.pkl'")
 
 # แสดงกราฟเปรียบเทียบผลลัพธ์
-plt.figure(figsize=(10,5))
+plt.figure(figsize=(10, 5))
 plt.bar(model_results.keys(), model_results.values(), color='blue')
 plt.xlabel("Model")
 plt.ylabel("Accuracy")
 plt.title("Comparison of Model Accuracies")
 plt.xticks(rotation=45)
+plt.ylim(0, 1)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.show()

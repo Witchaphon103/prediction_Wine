@@ -38,8 +38,8 @@ if st.button("Predict Wine Quality"):
     quality_score = int(probability[1] * 10)  # แปลงโอกาสเป็นสเกล 1-10
     
     if prediction == 1:
-        result = f"✅ คุณภาพสูง (ระดับ: {quality_score}/10)"
+        result = f"คุณภาพสูง (ระดับ: {quality_score}/10)"
     else:
-        result = f"❌ คุณภาพต่ำ (ระดับ: {10 - quality_score}/10)"
+        result = f"คุณภาพต่ำ (ระดับ: {10 - quality_score}/10)"
     
     st.subheader(f"ผลลัพธ์: {result}")
