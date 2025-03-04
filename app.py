@@ -4,18 +4,24 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 import numpy as np
 import joblib
+import os
 
 app = Flask(__name__)
 
+# ดึงค่า Access Token & Secret จาก Environment Variables
+LINE_ACCESS_TOKEN = os.getenv("nTuc8iPZAO7CYX0xqDnpep1ZIBmdqKDcH8tI2pP7GWgKdC/B3PIVJ+/HDNJ69F48yniCMP+HsRJu0SGX4JyW1rKehbhwDmbuRd7F8yef1qj567O2fti9RhYVXleEGtMwcNNiZe6OVUv64y0sBmgxbQdB04t89/1O/w1cDnyilFU=")
+LINE_CHANNEL_SECRET = os.getenv("ccc79951dcf9c6480fa521e45a902cae")
 
-LINE_ACCESS_TOKEN = "nTuc8iPZAO7CYX0xqDnpep1ZIBmdqKDcH8tI2pP7GWgKdC/B3PIVJ+/HDNJ69F48yniCMP+HsRJu0SGX4JyW1rKehbhwDmbuRd7F8yef1qj567O2fti9RhYVXleEGtMwcNNiZe6OVUv64y0sBmgxbQdB04t89/1O/w1cDnyilFU="
-LINE_CHANNEL_SECRET = "ccc79951dcf9c6480fa521e45a902cae"
 line_bot_api = LineBotApi(LINE_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
-
+# โหลดโมเดลและ Scaler
 model = joblib.load("best_wine_quality_model.pkl")
 scaler = joblib.load("scaler.pkl")
+
+@app.route("/")
+def home():
+    return "🚀 LINE Chatbot & Wine Quality API is Running!"
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
@@ -30,20 +36,14 @@ def webhook():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     try:
-        
         text = event.message.text.strip()
-        
         values = list(map(float, text.split(",")))
 
-        
         if len(values) != 11:
             reply_text = "กรุณากรอกข้อมูล 11 ค่า โดยใช้เครื่องหมายจุลภาค (,) คั่น เช่น: 7.4,0.7,0.0,1.9,0.076,11.0,34.0,0.9978,3.51,0.56,9.4"
         else:
-            
             input_data = np.array([values])
             input_scaled = scaler.transform(input_data)
-
-            
             prediction = model.predict(input_scaled)[0]
             probability = model.predict_proba(input_scaled)[0]
             quality_score = int(probability[1] * 10)
@@ -53,17 +53,11 @@ def handle_message(event):
             else:
                 reply_text = f"⚠️ คุณภาพไวน์: ต่ำ (ระดับ {10 - quality_score}/10)"
 
-        
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=reply_text)
-        )
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply_text))
 
     except Exception as e:
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="เกิดข้อผิดพลาด โปรดลองใหม่\n"+str(e))
-        )
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text="เกิดข้อผิดพลาด โปรดลองใหม่\n" + str(e)))
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Railway จะกำหนด PORT ให้อัตโนมัติ
+    app.run(host="0.0.0.0", port=port, debug=True)

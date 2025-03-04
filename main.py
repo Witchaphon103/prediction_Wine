@@ -164,3 +164,37 @@ if st.button("🔮 Predict Wine Quality"):
         """,
         unsafe_allow_html=True
     )
+
+if False:  # เปลี่ยนจาก True เป็น False เพื่อไม่ให้ปุ่มแสดง
+    st.markdown("<br>", unsafe_allow_html=True)  # เว้นระยะห่างให้ UI ดูไม่แน่นเกินไป
+
+    st.markdown(
+        """
+        <style>
+            .line-button {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+            .line-button a {
+                background-color: #06C755;
+                color: white;
+                padding: 15px 30px;
+                font-size: 20px;
+                font-weight: bold;
+                text-decoration: none;
+                border-radius: 10px;
+                transition: 0.3s ease-in-out;
+                display: inline-block;
+            }
+            .line-button a:hover {
+                background-color: #04a145;
+                transform: scale(1.05);
+            }
+        </style>
+        <div class="line-button">
+            <a href="https://line.me/R/ti/p/@777xzgmw" target="_blank">💬 Chat กับ LINE Bot</a>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
