@@ -40,7 +40,7 @@ def handle_message(event):
         values = list(map(float, text.split(",")))
 
         if len(values) != 11:
-            reply_text = "กรุณากรอกข้อมูล 11 ค่า โดยใช้เครื่องหมายจุลภาค (,) คั่น เช่น: 7.4,0.7,0.0,1.9,0.076,11.0,34.0,0.9978,3.51,0.56,9.4"
+            reply_text = "กรุณากรอกข้อมูล 11 ค่า เช่น: 7.4,0.7,0.0,1.9,0.076,11.0,34.0,0.9978,3.51,0.56,9.4"
         else:
             input_data = np.array([values])
             input_scaled = scaler.transform(input_data)
