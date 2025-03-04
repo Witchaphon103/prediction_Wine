@@ -8,11 +8,10 @@ import os
 
 app = Flask(__name__)
 
-# ดึงค่า Access Token & Secret จาก Environment Variables
+# ตรวจสอบว่า Environment Variables ถูกตั้งค่าหรือไม่
 LINE_ACCESS_TOKEN = os.getenv("LINE_ACCESS_TOKEN")
 LINE_CHANNEL_SECRET = os.getenv("LINE_CHANNEL_SECRET")
 
-# ตรวจสอบว่า Environment Variables ถูกตั้งค่าหรือไม่
 if not LINE_ACCESS_TOKEN or not LINE_CHANNEL_SECRET:
     raise ValueError("❌ Missing LINE_ACCESS_TOKEN or LINE_CHANNEL_SECRET. Please set them in Railway Environment Variables.")
 
