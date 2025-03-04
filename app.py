@@ -9,8 +9,8 @@ import os
 app = Flask(__name__)
 
 # ดึงค่า Access Token & Secret จาก Environment Variables
-LINE_ACCESS_TOKEN = os.getenv("nTuc8iPZAO7CYX0xqDnpep1ZIBmdqKDcH8tI2pP7GWgKdC/B3PIVJ+/HDNJ69F48yniCMP+HsRJu0SGX4JyW1rKehbhwDmbuRd7F8yef1qj567O2fti9RhYVXleEGtMwcNNiZe6OVUv64y0sBmgxbQdB04t89/1O/w1cDnyilFU=")
-LINE_CHANNEL_SECRET = os.getenv("ccc79951dcf9c6480fa521e45a902cae")
+LINE_ACCESS_TOKEN = os.getenv("LINE_ACCESS_TOKEN")
+LINE_CHANNEL_SECRET = os.getenv("LINE_CHANNEL_SECRET")
 
 line_bot_api = LineBotApi(LINE_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
