@@ -9,7 +9,7 @@ scaler = joblib.load("./scaler.pkl")
 # ------------------------- UI Styling -------------------------
 st.set_page_config(page_title="Wine Quality Predictor", page_icon="🍷", layout="centered")
 
-# CSS Styling - เพิ่ม Animation, Glow, Confetti/Snow, ปรับพื้นหลัง + ปรับแถบ Header
+# CSS Styling
 st.markdown(
     """
     <style>
@@ -131,7 +131,7 @@ with st.container():
         alcohol = st.number_input("Alcohol (แอลกอฮอล์)", min_value=0.0, step=0.1)
 
 # ------------------------- Predict Button -------------------------
-st.markdown("<br>", unsafe_allow_html=True)  # เว้นบรรทัดให้ UI ดูไม่แน่นเกินไป
+st.markdown("<br>", unsafe_allow_html=True)
 if st.button("🔮 Predict Wine Quality"):
     # เตรียมข้อมูลสำหรับโมเดล
     input_data = np.array([[fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides,
@@ -149,11 +149,11 @@ if st.button("🔮 Predict Wine Quality"):
     if prediction == 1:
         result_text = f"🍷 <b>ไวน์คุณภาพสูง!</b> (ระดับ: {quality_score}/10)"
         result_color = "#90EE90"
-        st.balloons()  # แสดงลูกโป่งถ้าไวน์คุณภาพสูง
+        st.balloons()
     else:
         result_text = f"⚠️ <b>ไวน์คุณภาพต่ำ</b> (ระดับ: {10 - quality_score}/10)"
         result_color = "#ff6666"
-        st.snow()      # แสดงหิมะเอฟเฟกต์ถ้าไวน์คุณภาพต่ำ
+        st.snow()
 
     # ------------------------- Show Result -------------------------
     st.markdown(
@@ -166,7 +166,7 @@ if st.button("🔮 Predict Wine Quality"):
     )
 
 # ------------------------- LINE Chatbot Button -------------------------
-st.markdown("<br>", unsafe_allow_html=True)  # เว้นระยะห่างให้ UI ดูไม่แน่นเกินไป
+st.markdown("<br>", unsafe_allow_html=True)
 
 st.markdown(
     """
